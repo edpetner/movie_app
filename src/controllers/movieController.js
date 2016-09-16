@@ -100,50 +100,9 @@ var movieController = function(movieService){
         }
       });
   };
-  var getTVDetails = function(req, res){
-
-  };
-  var getPersonDetails = function(req, res){
-
-  };
-  var getTargetDetails = function(req,res){
-    var store = req.params.storeType;
-    var filters = 'credits,videos,keywords,release_dates&';
-    loadLocalStore.checkLocalStore(store, {'tMDBID': parseInt(req.params.target)},
-      function(err, result){
-        if (err){
-          movieService()
-            .getTargetDetails({ref: store,
-                        target: req.params.target,
-                        sub: '',
-                        filters: ''},
-                        function(err, target, credits){
-                          if (err){
-                            res.redirect('/');
-                          } else {
-                            loadLocalStore.createLocalStore(store, target, credits,
-                            function(err, result){
-                              if (err){
-                                res.redirect('/');
-                              } else {
-                                console.log('Success: Data injected from API');
-                                res.setHeader('Content-Type', 'application/json');
-                                res.send(JSON.stringify(result));
-                              }
-                            });
-                          }
-                        });
-        } else {
-          console.log('Success: Data retrieved from MongoDB');
-          res.setHeader('Content-Type', 'application/json');
-          res.send(JSON.stringify(result));
-        }
-      });
-  };
 
   return {
     middleware: middleware,
-    getTargetDetails: getTargetDetails,
     getTargetList: getTargetList,
     getDiscoverList: getDiscoverList,
     getDetails: getDetails

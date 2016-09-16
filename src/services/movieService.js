@@ -67,32 +67,9 @@ var movieDBService = function(){
 
   };
 
-  // var getTargetDetails = function(params, callback){
-  //   apiQueryGenerator(params, function(err, target){
-  //     if (err){
-  //       callback(true, null);
-  //     } else {
-  //       if (params.ref === 'movie' || params.ref === 'tv'){
-  //         params.sub = '/credits';
-  //       } else {
-  //         params.sub = '/combined_credits';
-  //       }
-  //       apiQueryGenerator(params, function(err, credits){
-  //         if (err) {
-  //           callback(true, null);
-  //         } else {
-  //           // console.log('held up at credits');
-  //           callback(false, target, credits);
-  //         }
-  //       });
-  //     }
-  //   });
-  // };
-
 
 
   return {
-    // apiQueryGenerator: apiQueryGenerator,
     getDetails: getDetails,
     getTargetList: getTargetList,
     getDiscoverList: getDiscoverList

@@ -2,20 +2,14 @@ var express = require('express');
 var movieRouter = express.Router();
 
 var router = function(){
-  var movieService = require('../services/tMDBService');
+  var movieService = require('../services/movieService');
   var movieController = require('../controllers/movieController')(movieService);
 
   movieRouter.use(movieController.middleware);
-  movieRouter.router('/')
-    .get(movieController.getMovieIndex);
-  movieRouter.router('/genreIndex')
-    .get(movieController.getGenreIndex);
-  movieRouter.router('/byGenre')
-    .get(movieController.getMoviesByGenre);
-  movieRouter.router('/byPerson')
-    .get(movieController.getMoviesByPerson);
-  movieRouter.router('/byId')
-    .get(movieController.getMovieById);
+
+  // For retriving any details, on any store
+  movieRouter.route('/:storeType/:targetId')
+    .get(movieController.getTargetDetails);
   return movieRouter;
 };
 

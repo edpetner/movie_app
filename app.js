@@ -7,6 +7,8 @@ var session = require('express-session');
 var app = express();
 var port = process.env.PORT || 3000;
 
+var movieRouter = require('./src/routes/movieRoutes')();
+
 //middleware
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -15,6 +17,8 @@ app.use(cookieParser());
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
+
+app.use('/api', movieRouter);
 
 app.get('/', function(req, res){
   res.render('index', null);

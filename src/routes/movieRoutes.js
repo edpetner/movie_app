@@ -7,6 +7,8 @@ var router = function(){
 
   movieRouter.use(movieController.middleware);
 
+  movieRouter.route('/loadGenres')
+    .get(movieController.loadGenres);
   // For retriving any details, on any store
   movieRouter.route('/:storeType/:targetId')
     .get(movieController.getTargetDetails);

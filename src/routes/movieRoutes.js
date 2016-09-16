@@ -7,11 +7,13 @@ var router = function(){
 
   movieRouter.use(movieController.middleware);
 
-  movieRouter.route('/loadGenres')
-    .get(movieController.loadGenres);
+  movieRouter.route('/list/discover/:target/')
+    .get(movieController.getDiscoverList);
+  movieRouter.route('/list/:storeType/:target')
+    .get(movieController.getTargetList);
   // For retriving any details, on any store
-  movieRouter.route('/:storeType/:targetId')
-    .get(movieController.getTargetDetails);
+  movieRouter.route('/:store/:target')
+    .get(movieController.getDetails);
   return movieRouter;
 };
 

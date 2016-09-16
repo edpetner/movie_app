@@ -21,23 +21,25 @@ var localStoreHelper = function(){
     });
   };
 
-  var createLocalStore = function(store, target, credits, callback){
-    var targetObject;
+  var createLocalStore = function(store, target, callback){
+    var data = {};
+    console.log(target);
+    data.tMDBID = target.id;
     // create array's to store Directors, Producers, Screen Writers, Sound, Director of Photography
     target.tMDBID = target.id;
     if (store === 'movie' || store === 'tv'){
-      targetObject = formatObjectHelpers.formatMedia(target, credits);
+      data = formatObjectHelpers.formatMedia(target);
     } else if (store === 'person'){
-      targetObject = formatObjectHelpers.formatPerson(target, credits);
+      data = formatObjectHelpers.formatPerson(target);
     } else {
       return;
     }
     // after formatting objects, store into Mongo Collection
     mongodb.connect(process.env.MONGO_URL, function(err, db){
       var collection = db.collection(store);
-      collection.insertOne(targetObject, function(err, results){
+      collection.insertOne(data, function(err, results){
         db.close();
-        callback(null, targetObject);
+        callback(null, data);
       });
     });
 

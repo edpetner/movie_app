@@ -35,42 +35,54 @@ var movieDBService = function(){
     http.request(options, localCallback).end();
   };
 
-  var getTargetDetails = function(params, callback){
-    apiQueryGenerator(params, function(err, target){
+  var getTargetList = function(params, callback){
+    apiQueryGenerator(params, function(err, results){
       if (err){
         callback(true, null);
       } else {
-        if (params.ref === 'movie' || params.ref === 'tv'){
-          params.sub = '/credits';
-        } else {
-          params.sub = '/combined_credits';
-        }
-        apiQueryGenerator(params, function(err, credits){
-          if (err) {
-            callback(true, null);
-          } else {
-            // console.log('held up at credits');
-            callback(false, target, credits);
-          }
-        });
+        callback(false, results);
       }
     });
   };
-  // var getPerson = function(params, callback){
-  //   apiQueryGenerator(params, function(err, person){
+
+  var getDiscoverList = function(params, callback){
+    apiQueryGenerator(params, function(err, results){
+      if (err){
+        callback(true, null);
+      } else {
+        callback(false, results);
+      }
+    });
+  };
+
+  var getDetails = function(params, callback){
+    apiQueryGenerator(params, function(err, data){
+      if (err){
+        console.log(data);
+        callback(true, null);
+      } else {
+        callback(false, data);
+      }
+    });
+
+  };
+
+  // var getTargetDetails = function(params, callback){
+  //   apiQueryGenerator(params, function(err, target){
   //     if (err){
   //       callback(true, null);
   //     } else {
-  //       if (params.ref === 'movie'){
+  //       if (params.ref === 'movie' || params.ref === 'tv'){
   //         params.sub = '/credits';
   //       } else {
-  //         params.sub = '/combined/credits';
+  //         params.sub = '/combined_credits';
   //       }
   //       apiQueryGenerator(params, function(err, credits){
   //         if (err) {
   //           callback(true, null);
   //         } else {
-  //           callback(false, person, credits);
+  //           // console.log('held up at credits');
+  //           callback(false, target, credits);
   //         }
   //       });
   //     }
@@ -78,9 +90,12 @@ var movieDBService = function(){
   // };
 
 
+
   return {
     // apiQueryGenerator: apiQueryGenerator,
-    getTargetDetails: getTargetDetails
+    getDetails: getDetails,
+    getTargetList: getTargetList,
+    getDiscoverList: getDiscoverList
   };
 };
 

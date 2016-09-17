@@ -15,18 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
-app.set('views', './src/views');
-app.set('view engine', 'ejs');
-
 app.use('/api', movieRouter);
-
-app.get('/', function(req, res){
-  res.render('index', null);
-});
-
-app.get('/about', function(req, res){
-  res.render('single-post', null);
-});
 
 app.listen(port, function(err9){
   console.log('running server on port' + port);

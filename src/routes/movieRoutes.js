@@ -6,7 +6,8 @@ var router = function(){
   var movieController = require('../controllers/movieController')(movieService);
 
   movieRouter.use(movieController.middleware);
-
+  movieRouter.route('/loadMovies')
+    .get(movieController.loadMovies);
   movieRouter.route('/list/discover/:target/')
     .get(movieController.getDiscoverList);
   movieRouter.route('/list/:storeType/:target')

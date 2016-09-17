@@ -1,5 +1,5 @@
 var http = require('http');
-
+var url = require('url');
 var movieDBService = function(){
 
   var host = 'api.themoviedb.org';
@@ -8,16 +8,16 @@ var movieDBService = function(){
   // All tMDB Queries go through this function
   // -------------------------------------------
   var apiQueryGenerator = function(params, callback){
-    // TODO Refactor to destructure object cleaner
-    var ref = params.ref;
-    var target = params.target;
-    var sub = params.sub;
-    var filters = params.filters;
+    params.filters.api_key = process.env.MDB_SECRET;
+    var apiPath = url.format({
+      pathname: '/3/' + params.ref + '/' + params.target + params.sub,
+      query: params.filters
+    });
+    // console.log(params.filters);
     var options = {
       host: host,
-      path: '/3/' + ref + '/' + target + sub + '?' + filters + process.env.MDB_SECRET
+      path: apiPath
     };
-    console.log(options.path);
     var localCallback = function(response){
       var str = '';
       response.on('data', function(chunk){
@@ -35,44 +35,10 @@ var movieDBService = function(){
     http.request(options, localCallback).end();
   };
 
-  var getTargetList = function(params, callback){
-    apiQueryGenerator(params, function(err, results){
-      if (err){
-        callback(true, null);
-      } else {
-        callback(false, results);
-      }
-    });
-  };
-
-  var getDiscoverList = function(params, callback){
-    apiQueryGenerator(params, function(err, results){
-      if (err){
-        callback(true, null);
-      } else {
-        callback(false, results);
-      }
-    });
-  };
-
-  var getDetails = function(params, callback){
-    apiQueryGenerator(params, function(err, data){
-      if (err){
-        console.log(data);
-        callback(true, null);
-      } else {
-        callback(false, data);
-      }
-    });
-
-  };
-
 
 
   return {
-    getDetails: getDetails,
-    getTargetList: getTargetList,
-    getDiscoverList: getDiscoverList
+    apiQueryGenerator: apiQueryGenerator
   };
 };
 

@@ -13,8 +13,10 @@ var localStoreHelper = function(){
         function(err, result){
           if (result === null){
             callback(true, false);
+            db.close();
           } else {
             callback(false, result);
+            db.close();
           }
         });
 
@@ -23,7 +25,6 @@ var localStoreHelper = function(){
 
   var createLocalStore = function(store, target, callback){
     var data = {};
-    console.log(target);
     data.tMDBID = target.id;
     // create array's to store Directors, Producers, Screen Writers, Sound, Director of Photography
     target.tMDBID = target.id;
